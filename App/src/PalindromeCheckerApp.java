@@ -1,33 +1,41 @@
 /*
 ================================================================================================================
-MAIN CLASS - UseCase1PalindromeApp
+MAIN CLASS - UseCase2PalindromeApp
 ================================================================================================================
 
-Use Case 1: Application Entry and Welcome Message
+Use Case 1: Hardcoded Palindrome Validation
 
 Description:
-This class represents the entry point of the
-Palindrome Checker Management System
+This class represents basic palindrome validation using
+a Hardcoded String Value
 
 At this stage, the application:
 - Starts execution from the main method
 - Displays a welcome message
 - Shows application Version
+- Stores a Hardcoded String
+- Reverses the String and stores it
+- Compares to the Original and Checks if the String is Palindrome.
 
-No palindrome logic is implemented yet
 
-The goal is to establish a clear startup flow.
+The goal is to find if a Hardcoded string is Palindrome or not.
 
 @author SAKET-2005
-@version 1.0
+@version 2.0
  */
 
 public class PalindromeCheckerApp
 {
     public static void main(String args[])
     {
-        System.out.println("Welcome to The Pallindrome Checker");
+        System.out.println("Welcome to The Palindrome Checker");
         System.out.println("Author: SAKET-2005");
         System.out.println("Version: 1.0");
+        String txt = "123321";
+        String rev = new StringBuilder(txt).reverse().toString();
+        if(txt.equals(rev))
+            System.out.println("The String "+txt+" is a Palindrome");
+        else
+            System.out.println("The String "+txt+" is Not a Palindrome");
     }
 }

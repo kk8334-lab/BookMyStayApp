@@ -1,33 +1,38 @@
 /*
 ================================================================================================================
-MAIN CLASS - UseCase11EncapsulatedPalindromeApp
+MAIN CLASS - UseCase12StrategyPalindromeApp
 ================================================================================================================
 
-Use Case 11: Encapsulating Palindrome Logic in a Class
+Use Case 12: Dynamic Palindrome Algorithm Selection using Strategy Pattern
 
 Description:
-This class demonstrates palindrome validation using encapsulation
-by defining a separate PalindromeChecker class.
+This class demonstrates dynamic selection of palindrome checking algorithms
+using the Strategy Pattern with a Hardcoded String.
 
 At this stage, the application:
 - Starts execution from the main method
 - Displays a welcome message
 - Shows application Version
 - Stores a Hardcoded String
-- Uses the PalindromeChecker class to validate the string
+- Defines a PalindromeStrategy interface
+- Implements multiple strategies (StackStrategy, DequeStrategy)
+- Allows the client to inject the desired strategy at runtime
 - Prints whether the String is Palindrome or Not
 
 Key Concepts (OOPS):
-Encapsulation – Hides internal implementation and exposes a public method.
-Single Responsibility Principle – PalindromeChecker class only handles palindrome logic.
-Logical Comparison – Matching characters from start and end positions using internal structures.
-
-Data Structure Used: Internal (Stack / Character Array)
+Interface – Defines a contract for palindrome checking strategies.
+Polymorphism – Enables the client to use different strategies interchangeably.
+Strategy Pattern – Encapsulates algorithms and makes them interchangeable.
+Data Structure Used: Varies per strategy (Stack / Deque)
 
 @author SAKET-2005
-@version 11.0
+@version 12.0
 ================================================================================================================
 */
+
+import java.util.Stack;
+import java.util.Deque;
+import java.util.LinkedList;
 
 public class PalindromeCheckerApp
 {
@@ -35,40 +40,63 @@ public class PalindromeCheckerApp
     {
         System.out.println("Welcome to The Palindrome Checker");
         System.out.println("Author: SAKET-2005");
-        System.out.println("Version: 11.0");
+        System.out.println("Version: 12.0");
 
-        String txt = "racecar";
+        String txt = "12321";
 
-        PalindromeChecker checker = new PalindromeChecker(txt);
+        PalindromeStrategy strategy;
 
-        if(checker.checkPalindrome())
+        // Choose strategy dynamically
+        boolean useStack = true; // Change to false to use DequeStrategy
+
+        if(useStack)
+            strategy = new StackStrategy();
+        else
+            strategy = new DequeStrategy();
+
+        boolean isPalindrome = strategy.checkPalindrome(txt);
+
+        if(isPalindrome)
             System.out.println("The String \"" + txt + "\" is a Palindrome");
         else
             System.out.println("The String \"" + txt + "\" is Not a Palindrome");
     }
 }
 
-class PalindromeChecker
+interface PalindromeStrategy
 {
-    private String text;
+    boolean checkPalindrome(String text);
+}
 
-    public PalindromeChecker(String text)
+class StackStrategy implements PalindromeStrategy
+{
+    public boolean checkPalindrome(String text)
     {
-        this.text = text;
-    }
+        Stack<Character> stack = new Stack<>();
+        for(int i = 0; i < text.length(); i++)
+            stack.push(text.charAt(i));
 
-    public boolean checkPalindrome()
-    {
-        char[] chars = text.toCharArray();
-        int start = 0;
-        int end = chars.length - 1;
-
-        while(start < end)
+        for(int i = 0; i < text.length(); i++)
         {
-            if(chars[start] != chars[end])
+            if(text.charAt(i) != stack.pop())
                 return false;
-            start++;
-            end--;
+        }
+        return true;
+    }
+}
+
+class DequeStrategy implements PalindromeStrategy
+{
+    public boolean checkPalindrome(String text)
+    {
+        Deque<Character> deque = new LinkedList<>();
+        for(int i = 0; i < text.length(); i++)
+            deque.addLast(text.charAt(i));
+
+        while(deque.size() > 1)
+        {
+            if(deque.removeFirst() != deque.removeLast())
+                return false;
         }
         return true;
     }

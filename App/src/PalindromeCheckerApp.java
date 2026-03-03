@@ -1,30 +1,40 @@
 /*
 ================================================================================================================
-MAIN CLASS - UseCase4PalindromeApp
+MAIN CLASS - UseCase5PalindromeApp
 ================================================================================================================
 
-Use Case 4: Character Array Conversion and Validation
+Use Case 5: Palindrome Validation Using Stack (LIFO Principle)
 
 Description:
-This class represents basic palindrome validation using
-a Hardcoded String Value
+This class represents palindrome validation using
+a Hardcoded String Value and Stack Data Structure.
 
 At this stage, the application:
 - Starts execution from the main method
 - Displays a welcome message
 - Shows application Version
 - Stores a Hardcoded String
-- Converts the String to Char Array
-- Iterates the String from the other end and checks if the characters are same.
--If they are same, prints that it is Palindrome, otherwise its not.
-- Prints the Original String as Well as the Reversed String for the User to see.
+- Pushes each character of the String into a Stack
+- Pops characters from the Stack to reverse the String
+- Compares the Original String with the Reversed String
+- Prints whether the String is Palindrome or Not
+- Displays both Original and Reversed Strings
 
 
-The goal is to find if a Hardcoded string is Palindrome or not.
+The goal is to find if a Hardcoded string is Palindrome or not
+using Stack (LIFO - Last In First Out).
+
+Key Concepts:
+Stack – A linear data structure that follows the Last In First Out (LIFO) principle.
+Push Operation – Used to insert characters into the stack.
+Pop Operation – Used to remove characters from the stack in reverse order.
+Reversal Logic – Stack naturally reverses the order of elements.
 
 @author SAKET-2005
-@version 4.0
+@version 5.0
  */
+
+import java.util.Stack;
 
 public class PalindromeCheckerApp
 {
@@ -32,21 +42,30 @@ public class PalindromeCheckerApp
     {
         System.out.println("Welcome to The Palindrome Checker");
         System.out.println("Author: SAKET-2005");
-        System.out.println("Version: 1.0");
+        System.out.println("Version: 5.0");
+
         String txt = "123321";
-        char str[] = txt.toCharArray();
-        int n = str.length;
-        int m = n-1;
-        int c = 0;
-        for(int i = 0; i<n; i++)
+
+        Stack<Character> stack = new Stack<>();
+
+        for(int i = 0; i < txt.length(); i++)
         {
-            if(str[i]==str[m])
-                c++;
-            m--;
+            stack.push(txt.charAt(i));
         }
-        if(c==n)
-            System.out.println("The String "+txt+" is a Palindrome");
+
+        String reversed = "";
+
+        while(!stack.isEmpty())
+        {
+            reversed = reversed + stack.pop();
+        }
+
+        System.out.println("Original String: " + txt);
+        System.out.println("Reversed String: " + reversed);
+
+        if(txt.equals(reversed))
+            System.out.println("The String " + txt + " is a Palindrome");
         else
-            System.out.println("The String "+txt+" is Not a Palindrome");
+            System.out.println("The String " + txt + " is Not a Palindrome");
     }
 }

@@ -1,34 +1,34 @@
 /*
 ================================================================================================================
-MAIN CLASS - UseCase9RecursionPalindromeApp
+MAIN CLASS - UseCase10NormalizedPalindromeApp
 ================================================================================================================
 
-Use Case 9: Palindrome Validation using Recursion
+Use Case 10: Palindrome Validation Ignoring Spaces and Case
 
 Description:
-This class demonstrates palindrome validation using
-Recursion with a Hardcoded String.
+This class demonstrates palindrome validation by ignoring
+spaces and character case differences using a Hardcoded String.
 
 At this stage, the application:
 - Starts execution from the main method
 - Displays a welcome message
 - Shows application Version
 - Stores a Hardcoded String
-- Uses a recursive method to compare characters from start and end
-- Applies a base condition to terminate recursion
-- Utilizes Call Stack to manage recursive calls
-- Prints whether the String is Palindrome or Not
+- Normalizes the String by removing spaces using Regular Expressions
+- Converts the String to lowercase for case-insensitive comparison
+- Applies palindrome checking logic on the processed String
+- Prints whether the original String is Palindrome or Not
 
 Key Concepts:
-Recursion – A technique where a method calls itself to solve smaller subproblems.
-Base Condition – Prevents infinite recursion and terminates the recursive calls.
-Call Stack – Memory structure used to manage method calls during recursion.
-Logical Comparison – Matching first and last characters progressively.
+String Pre-processing – Preparing the string before validation.
+Regular Expressions – Used to remove unwanted characters such as spaces.
+Case Normalization – Converting characters to uniform case.
+Logical Comparison – Matching characters from start and end positions.
 
-Data Structure Used: Call Stack
+Data Structure Used: String / Character Array
 
 @author SAKET-2005
-@version 9.0
+@version 10.0
 ================================================================================================================
 */
 
@@ -38,26 +38,31 @@ public class PalindromeCheckerApp
     {
         System.out.println("Welcome to The Palindrome Checker");
         System.out.println("Author: SAKET-2005");
-        System.out.println("Version: 9.0");
+        System.out.println("Version: 10.0");
 
-        String txt = "123321";
+        String txt = "Never Odd Or Even";
 
-        boolean isPalindrome = checkPalindrome(txt, 0, txt.length() - 1);
+        String normalized = txt.replaceAll("\\s+", "").toLowerCase();
+
+        boolean isPalindrome = true;
+
+        int start = 0;
+        int end = normalized.length() - 1;
+
+        while(start < end)
+        {
+            if(normalized.charAt(start) != normalized.charAt(end))
+            {
+                isPalindrome = false;
+                break;
+            }
+            start++;
+            end--;
+        }
 
         if(isPalindrome)
-            System.out.println("The String " + txt + " is a Palindrome");
+            System.out.println("The String \"" + txt + "\" is a Palindrome (Ignoring spaces and case)");
         else
-            System.out.println("The String " + txt + " is Not a Palindrome");
-    }
-
-    public static boolean checkPalindrome(String txt, int start, int end)
-    {
-        if(start >= end)
-            return true;
-
-        if(txt.charAt(start) != txt.charAt(end))
-            return false;
-
-        return checkPalindrome(txt, start + 1, end - 1);
+            System.out.println("The String \"" + txt + "\" is Not a Palindrome");
     }
 }

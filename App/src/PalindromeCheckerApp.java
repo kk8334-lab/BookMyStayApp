@@ -1,34 +1,31 @@
 /*
 ================================================================================================================
-MAIN CLASS - UseCase10NormalizedPalindromeApp
+MAIN CLASS - UseCase11EncapsulatedPalindromeApp
 ================================================================================================================
 
-Use Case 10: Palindrome Validation Ignoring Spaces and Case
+Use Case 11: Encapsulating Palindrome Logic in a Class
 
 Description:
-This class demonstrates palindrome validation by ignoring
-spaces and character case differences using a Hardcoded String.
+This class demonstrates palindrome validation using encapsulation
+by defining a separate PalindromeChecker class.
 
 At this stage, the application:
 - Starts execution from the main method
 - Displays a welcome message
 - Shows application Version
 - Stores a Hardcoded String
-- Normalizes the String by removing spaces using Regular Expressions
-- Converts the String to lowercase for case-insensitive comparison
-- Applies palindrome checking logic on the processed String
-- Prints whether the original String is Palindrome or Not
+- Uses the PalindromeChecker class to validate the string
+- Prints whether the String is Palindrome or Not
 
-Key Concepts:
-String Pre-processing – Preparing the string before validation.
-Regular Expressions – Used to remove unwanted characters such as spaces.
-Case Normalization – Converting characters to uniform case.
-Logical Comparison – Matching characters from start and end positions.
+Key Concepts (OOPS):
+Encapsulation – Hides internal implementation and exposes a public method.
+Single Responsibility Principle – PalindromeChecker class only handles palindrome logic.
+Logical Comparison – Matching characters from start and end positions using internal structures.
 
-Data Structure Used: String / Character Array
+Data Structure Used: Internal (Stack / Character Array)
 
 @author SAKET-2005
-@version 10.0
+@version 11.0
 ================================================================================================================
 */
 
@@ -38,31 +35,41 @@ public class PalindromeCheckerApp
     {
         System.out.println("Welcome to The Palindrome Checker");
         System.out.println("Author: SAKET-2005");
-        System.out.println("Version: 10.0");
+        System.out.println("Version: 11.0");
 
-        String txt = "Never Odd Or Even";
+        String txt = "racecar";
 
-        String normalized = txt.replaceAll("\\s+", "").toLowerCase();
+        PalindromeChecker checker = new PalindromeChecker(txt);
 
-        boolean isPalindrome = true;
+        if(checker.checkPalindrome())
+            System.out.println("The String \"" + txt + "\" is a Palindrome");
+        else
+            System.out.println("The String \"" + txt + "\" is Not a Palindrome");
+    }
+}
 
+class PalindromeChecker
+{
+    private String text;
+
+    public PalindromeChecker(String text)
+    {
+        this.text = text;
+    }
+
+    public boolean checkPalindrome()
+    {
+        char[] chars = text.toCharArray();
         int start = 0;
-        int end = normalized.length() - 1;
+        int end = chars.length - 1;
 
         while(start < end)
         {
-            if(normalized.charAt(start) != normalized.charAt(end))
-            {
-                isPalindrome = false;
-                break;
-            }
+            if(chars[start] != chars[end])
+                return false;
             start++;
             end--;
         }
-
-        if(isPalindrome)
-            System.out.println("The String \"" + txt + "\" is a Palindrome (Ignoring spaces and case)");
-        else
-            System.out.println("The String \"" + txt + "\" is Not a Palindrome");
+        return true;
     }
 }

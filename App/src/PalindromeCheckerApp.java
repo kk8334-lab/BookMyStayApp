@@ -1,43 +1,40 @@
 /*
 ================================================================================================================
-MAIN CLASS - UseCase6QueueStackPalindromeApp
+MAIN CLASS - UseCase7DequePalindromeApp
 ================================================================================================================
 
-Use Case 6: Demonstration of FIFO vs LIFO using Queue and Stack
+Use Case 7: Palindrome Validation using Deque (Double Ended Queue)
 
 Description:
-This class demonstrates the behavioral difference between
-Queue (FIFO – First In First Out) and
-Stack (LIFO – Last In First Out) using a Hardcoded String.
+This class demonstrates palindrome validation using
+Deque (Double Ended Queue) with a Hardcoded String.
 
 At this stage, the application:
 - Starts execution from the main method
 - Displays a welcome message
 - Shows application Version
 - Stores a Hardcoded String
-- Enqueues characters into a Queue (FIFO)
-- Pushes characters into a Stack (LIFO)
-- Compares Dequeue (Queue) output with Pop (Stack) output
-- Validates Palindrome logic using structural behavior
+- Inserts characters into a Deque
+- Removes characters from both Front and Rear
+- Compares first and last characters directly
+- Continues comparison until Deque becomes empty or mismatch occurs
 - Prints whether the String is Palindrome or Not
 
 Key Concepts:
-Queue – A linear data structure that follows the First In First Out (FIFO) principle.
-Enqueue & Dequeue Operations – Used to insert and remove elements from the queue.
-Stack – A linear data structure that follows the Last In First Out (LIFO) principle.
-Push & Pop Operations – Used to insert and remove elements from the stack.
-Logical Comparison – Matching dequeue (queue) output with pop (stack) output to validate palindrome logic.
+Deque (Double Ended Queue) – A data structure that allows insertion and deletion from both front and rear ends.
+Front and Rear Access – Enables direct comparison of first and last characters.
+Optimized Data Handling – Eliminates the need for separate reversal data structures.
+Logical Comparison – Matching front and rear elements to validate palindrome logic.
 
-Data Structures Used: Queue, Stack
+Data Structure Used: Deque
 
 @author SAKET-2005
-@version 6.0
+@version 7.0
 ================================================================================================================
 */
 
-import java.util.Queue;
+import java.util.Deque;
 import java.util.LinkedList;
-import java.util.Stack;
 
 public class PalindromeCheckerApp
 {
@@ -45,24 +42,25 @@ public class PalindromeCheckerApp
     {
         System.out.println("Welcome to The Palindrome Checker");
         System.out.println("Author: SAKET-2005");
-        System.out.println("Version: 6.0");
+        System.out.println("Version: 7.0");
 
         String txt = "123321";
 
-        Queue<Character> queue = new LinkedList<>();
-        Stack<Character> stack = new Stack<>();
+        Deque<Character> deque = new LinkedList<>();
 
         for(int i = 0; i < txt.length(); i++)
         {
-            queue.add(txt.charAt(i));
-            stack.push(txt.charAt(i));
+            deque.addLast(txt.charAt(i));
         }
 
         boolean isPalindrome = true;
 
-        while(!queue.isEmpty())
+        while(deque.size() > 1)
         {
-            if(queue.remove() != stack.pop())
+            char front = deque.removeFirst();
+            char rear = deque.removeLast();
+
+            if(front != rear)
             {
                 isPalindrome = false;
                 break;
